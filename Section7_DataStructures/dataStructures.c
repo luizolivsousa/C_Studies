@@ -8,15 +8,49 @@
 
 #define DIMQUEUE 10
 
-void listQueueElements();
 void enQueueElement();
+void deQueueElement();
+void clearQueue();
+void listQueueElements();
 
 int queue[DIMQUEUE] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int head = 0;
 int tail = 0;
 
 int main() {
-    listQueueElements();
+    
+    int option = 0;
+
+    do{
+        printf("Avaible commands:\n");
+        printf("[1] - Insert element: \n");
+        printf("[2] - Delete element: \n");
+        printf("[3] - List elements: \n");
+        printf("[4] - Clear queue: \n");
+        printf("[-1] - Exit: \n");
+        printf("Option: ");
+        scanf("%d", &option);
+
+        switch (option) {
+        case 1:
+            enQueueElement();
+            break;
+        case 2:
+            deQueueElement();
+            break;
+        case 3:
+            listQueueElements();
+            break;
+        case 4:
+            clearQueue();
+            break;
+        case -1:
+            break;
+        default:
+            printf("Invalid option!");
+        }
+    } while (option != -1);
+
     return 0;
 }
 
@@ -25,7 +59,7 @@ void enQueueElement(){
     if (tail < DIMQUEUE){
         printf("Type the element you want to add to the queue: ");
         scanf("%d", &enValue);
-        queue[0] = enValue;
+        queue[tail] = enValue;
         ++tail;
         listQueueElements();
     } else {
@@ -33,9 +67,27 @@ void enQueueElement(){
     }
 }
 
+void deQueueElement(){
+    int enValue;
+    if (head < tail){
+        queue[head] = 0;
+        ++head;
+        listQueueElements();
+    } else {
+        printf("The queue is empty...");
+    }
+}
+
+void clearQueue(){
+    for (int i=0; i < DIMQUEUE; i++) {
+        queue[i] = 0;
+    }
+    head = 0;
+    tail = 0;
+}
 
 void listQueueElements(){
-    printf("==================CURRENT QUEUE===================\n");
+    printf("\n==================CURRENT QUEUE===================\n");
     for (int i=0; i < DIMQUEUE; i++){
         printf("-");
         printf("|%d|", queue[i]);
